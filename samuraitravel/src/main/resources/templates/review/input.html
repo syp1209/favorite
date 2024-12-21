@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>レビュー投稿ページ</title>
+</head>
+<body>
+	<form method="post" th:action="@{/houses/review/list/input/create}" th:object="${reviewInputForm}">
+
+        <input type="hidden" name="houseId" th:value="${houseId}" />
+        
+         <div class="col-md-8"> 
+			 <label for="dropdown">評価を選択してください：</label>
+			 <br/>
+			 <select class="dropdown form-control" name="selectedScore">
+				<option th:each="scoreItem : ${scoreList}" th:value="${scoreItem.getKey()}" th:text="${scoreItem.getValue()}"></option>
+			 </select>
+         </div>
+         <br/>
+         <div class="col-md-8"> 
+         	<label for="content">レビュー内容</label>
+         	<br/>
+        	<textarea name="content" placeholder="レビュー内容を入力してください" rows="5" cols="33"></textarea>
+		 </div>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+     <head>
+         <div th:replace="~{fragment :: meta}"></div>   
+              
+         <div th:replace="~{fragment :: styles}"></div>
+           
+         <title>レビュー一覧</title>   
+     </head>
+     <body>
+		 <main>
+			 <div class="text-center my-4">
+				 <form method="get" th:action="@{/houses/review/list/input}" th:object="${reviewInputForm}">
+				 	<!-- 民宿のIDをレビュー投稿ページ処理に渡す -->
+					 <input type="hidden" name="houseId" th:value="${house.getId()}">
+					 
+					 <a th:href="@{/houses}">戻る</a>
+					 <button type="submit" class="btn btn-primary">レビューを書く</button>
+					 <!--
+					 <button input type="submit" class="btn btn-primary" th:action="@{/houses/review/list/edit}" th:object="${reviewEditForm}">編集する</button>
+				 		
+				 	<a th:href="@{/edit/{id}(id=${review.id})}" class="btn btn-primary">編集する</a>-->
+				 </form>
+			 </div>
+			 
+			 <!-- レビュー一覧 -->
+				 <div class="card">
+					 <div class="card-body">
+						 <form method="get" th:action="@{/houses/review/list/edit}" th:object="${reviewListForm}">
+							 <!-- 編集ボタン、削除ボタン  -->
+							 <input type="hidden" name="houseId" th:value="${house.getId()}">
+							 <button type="submit" class="btn btn-primary" name="edit" th:object="${reviewListForm}">
+							 編集
+							 </button>
+							 <button type="submit" class="btn btn-primary" name="delete" th:object="${reviewListForm}">
+							 削除
+							 </button>
+							 <br><br>
+							 <div class="col-md-6" th:each="review : ${reviews}">
+								<div class="border p-3 mb-3">
+									<!-- ログインユーザとレビューの投稿者IDを比較 -->
+									<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">
+										<input type="radio" name="reviewId" th:value="${review.id}">
+									</div>
+									<h5 th:text="${review.user.name}"></h5>
+									<p>Score: <span th:text="${review.score}"></span></p>
+									<p th:text="${review.content}"></p>
+									<p><small th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></small></p>
+								</div>
+							</div>
+						</form>
+					 </div>
+				 </div>
+		 </main>
+	 </body>
+</html>

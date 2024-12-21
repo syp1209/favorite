@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>レビュー編集ページ</title>
+</head>
+<body>
+	<a th:href="@{/}">ホーム</a></li>
+	<form method="post" th:action="@{/houses/review/list/edit/update}" th:object="${reviewEditForm}">
+
+        <input type="hidden" name="houseId" th:value="${houseId}" />
+        <input type="hidden" name="reviewId" th:value="${reviewEditForm.getReviewId()}" />
+
+
+         <div class="col-md-8"> 
+			 <label for="dropdown">評価を再選択してください：</label>
+			 <br/>
+			 <select class="dropdown form-control" name="selectedScore" />                                    
+				<option th:each="scoreItem : ${scoreList}" th:value="${scoreItem.getKey()}" th:text="${scoreItem.getValue()}" th:selected="${scoreItem.getKey() == reviewEditForm.getSelectedScore()}" />
+			 </select>
+         </div>
+         <br/>
+         <div class="col-md-8"> 
+         	<label for="content">レビュー内容</label>
+         	<br/>
+         	
+        	<input textarea name="content" th:field="*{content}" th:value="${reviewEditForm.getContent()}" placeholder="レビュー内容を再入力してください" rows="5" cols="33"></inputtextarea>
+		 </div>
+        <button type="submit">再投稿</button>
+    </form>
+</body>
+</html>
