@@ -57,12 +57,14 @@ public class ReviewController {
         House house = houseRepository.getReferenceById(houseId);
         //User user = userDetailsImpl.getUser();
         
+        
         model.addAttribute("reviews", reviews);
         model.addAttribute("house", house);
        // model.addAttribute("user", user);//ログイン中のユーザのみにラジオボタンを表示する際に必要
         
         return "review/list";
     }
+    
     
     private Map<Integer, String> getReviewList() {
     	
@@ -76,7 +78,7 @@ public class ReviewController {
    	 	return reviewMap;
     }
 	
-	
+
 	
     //レビュー投稿ページ
 	@GetMapping("/houses/review/list/input")
