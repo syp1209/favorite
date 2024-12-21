@@ -15,7 +15,8 @@
 					 <input type="hidden" name="houseId" th:value="${house.getId()}">
 					 
 					 <a th:href="@{/houses}">戻る</a>
-					 <button type="submit" class="btn btn-primary">レビューを書く</button>
+					 <!--ログインしている場合に「レビューを書く」ボタンを表示する-->
+					 <button type="submit" class="btn btn-primary" sec:authorize="isAuthenticated()">レビューを書く</button>
 					 <!--
 					 <button input type="submit" class="btn btn-primary" th:action="@{/houses/review/list/edit}" th:object="${reviewEditForm}">編集する</button>
 				 		
@@ -29,10 +30,10 @@
 						 <form method="get" th:action="@{/houses/review/list/edit}" th:object="${reviewListForm}">
 							 <!-- 編集ボタン、削除ボタン  -->
 							 <input type="hidden" name="houseId" th:value="${house.getId()}">
-							 <button type="submit" class="btn btn-primary" name="edit" th:object="${reviewListForm}">
+							 <button type="submit" class="btn btn-primary" name="edit" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
 							 編集
 							 </button>
-							 <button type="submit" class="btn btn-primary" name="delete" th:object="${reviewListForm}">
+							 <button type="submit" class="btn btn-primary" name="delete" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
 							 削除
 							 </button>
 							 <br><br>
