@@ -58,6 +58,11 @@ public class ReviewService {
         return convertReviewList(reviewRepository.findByHouseIdOrderByCreatedAtDesc(houseId));
     }
     
+    //レビュー一覧から
+    public List<ReviewListForm> findReviewsByHouseIdandUserId(int houseId, int userId){
+    	return convertReviewList(reviewRepository.findByHouseIdAndUserId(houseId, userId));
+    }
+    
     private List<ReviewListForm> convertReviewList(List<Review> reviewList){
     	
     	List<ReviewListForm> convReviewList = new ArrayList<ReviewListForm>();

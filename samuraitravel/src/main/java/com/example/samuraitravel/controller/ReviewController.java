@@ -2,6 +2,7 @@ package com.example.samuraitravel.controller;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +58,22 @@ public class ReviewController {
         House house = houseRepository.getReferenceById(houseId);
         //User user = userDetailsImpl.getUser();
         
+      
+        
+      //自分のユーザがレビュー投稿したデータがあるかチェック       
+        List<ReviewListForm> ownReviews;
+        
+        if(userDetailsImpl == null) {
+        	ownReviews = new ArrayList<>();
+        }
+        else {
+        	ownReviews= reviewService.findReviewsByHouseIdandUserId(houseId, userDetailsImpl.getUser().getId());
+        }
+    	model.addAttribute("ownReviews", ownReviews);
         
         model.addAttribute("reviews", reviews);
         model.addAttribute("house", house);
+        model.addAttribute("ownReviews", ownReviews);
        // model.addAttribute("user", user);//ログイン中のユーザのみにラジオボタンを表示する際に必要
         
         return "review/list";

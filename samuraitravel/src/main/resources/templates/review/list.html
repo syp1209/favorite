@@ -16,7 +16,10 @@
 					 
 					 <a th:href="@{/houses}">戻る</a>
 					 <!--ログインしている場合に「レビューを書く」ボタンを表示する-->
-					 <button type="submit" class="btn btn-primary" sec:authorize="isAuthenticated()">レビューを書く</button>
+					<div sec:authorize="isAuthenticated()" th:if="${ownReviews.size() == 0}">
+					 	<button type="submit" class="btn btn-primary">レビューを書く</button>
+					 </div>
+					
 					 <!--
 					 <button input type="submit" class="btn btn-primary" th:action="@{/houses/review/list/edit}" th:object="${reviewEditForm}">編集する</button>
 				 		
@@ -28,7 +31,13 @@
 				 <div class="card">
 					 <div class="card-body">
 						 <form method="get" th:action="@{/houses/review/list/edit}" th:object="${reviewListForm}">
-							 <!-- 編集ボタン、削除ボタン  -->
+
+							 <br><br>
+							 <div class="col-md-6" th:each="review : ${reviews}">
+								<div class="border p-3 mb-3">
+									<!-- ログインユーザとレビューの投稿者IDを比較 -->
+									<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">
+																	 <!-- 編集ボタン、削除ボタン  -->
 							 <input type="hidden" name="houseId" th:value="${house.getId()}">
 							 <button type="submit" class="btn btn-primary" name="edit" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
 							 編集
@@ -36,12 +45,6 @@
 							 <button type="submit" class="btn btn-primary" name="delete" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
 							 削除
 							 </button>
-							 <br><br>
-							 <div class="col-md-6" th:each="review : ${reviews}">
-								<div class="border p-3 mb-3">
-									<!-- ログインユーザとレビューの投稿者IDを比較 -->
-									<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">
-										<input type="radio" name="reviewId" th:value="${review.id}">
 									</div>
 									<h5 th:text="${review.user.name}"></h5>
 									<p>Score: <span th:text="${review.score}"></span></p>
