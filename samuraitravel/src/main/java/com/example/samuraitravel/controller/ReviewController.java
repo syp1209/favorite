@@ -127,7 +127,10 @@ public class ReviewController {
 		
 		//レビュー一覧に表示する最新の情報を取得
         List<ReviewListForm> reviews = reviewService.findReviewsByHouseId(houseId);
+      //自分のユーザがレビュー投稿したデータがあるかチェック
+        List<ReviewListForm> ownReviews = reviewService.findReviewsByHouseIdandUserId(houseId, userDetailsImpl.getUser().getId());
         
+        model.addAttribute("ownReviews", ownReviews);
         model.addAttribute("reviews", reviews);
         model.addAttribute("house", house);
         
@@ -178,12 +181,14 @@ public class ReviewController {
 		//更新後の最新情報で一覧を再表示
 		List<ReviewListForm> reviews = reviewService.findReviewsByHouseId(houseId);
 	    House house = houseRepository.getReferenceById(houseId);
-	    User user = userDetailsImpl.getUser();
 	    
+	    User user = userDetailsImpl.getUser();
+	  //自分のユーザがレビュー投稿したデータがあるかチェック
+        List<ReviewListForm> ownReviews = reviewService.findReviewsByHouseIdandUserId(houseId, userDetailsImpl.getUser().getId());
 	    model.addAttribute("reviews", reviews);
 	    model.addAttribute("house", house);
 	    model.addAttribute("user", user);//ログイン中のユーザのみにラジオボタンを表示する際に必要
-	    
+	    model.addAttribute("ownReviews", ownReviews);
 	    return "/review/list";
 	}
     
@@ -200,9 +205,13 @@ public class ReviewController {
 		
 		//削除後の最新情報で一覧を再表示
 		List<ReviewListForm> reviews = reviewService.findReviewsByHouseId(houseId);
+		//自分のユーザがレビュー投稿したデータがあるかチェック
+		List<ReviewListForm> ownReviews = reviewService.findReviewsByHouseIdandUserId(houseId, userDetailsImpl.getUser().getId());
+		
 		House house = houseRepository.getReferenceById(houseId);
 		User user = userDetailsImpl.getUser();
 		
+		model.addAttribute("ownReviews", ownReviews);
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("house", house);
 		model.addAttribute("user", user);//ログイン中のユーザのみにラジオボタンを表示する際に必要
