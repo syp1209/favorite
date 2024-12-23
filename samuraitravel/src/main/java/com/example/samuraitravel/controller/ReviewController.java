@@ -63,6 +63,8 @@ public class ReviewController {
       //自分のユーザがレビュー投稿したデータがあるかチェック       
         List<ReviewListForm> ownReviews;
         
+        
+        
         if(userDetailsImpl == null) {
         	ownReviews = new ArrayList<>();
         }
@@ -73,7 +75,7 @@ public class ReviewController {
         
         model.addAttribute("reviews", reviews);
         model.addAttribute("house", house);
-        model.addAttribute("ownReviews", ownReviews);
+       // model.addAttribute("ownReviews", ownReviews);
        // model.addAttribute("user", user);//ログイン中のユーザのみにラジオボタンを表示する際に必要
         
         return "review/list";

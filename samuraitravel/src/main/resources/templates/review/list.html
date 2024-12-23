@@ -37,8 +37,9 @@
 								<div class="border p-3 mb-3">
 									<!-- ログインユーザとレビューの投稿者IDを比較 -->
 									<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">
-																	 <!-- 編集ボタン、削除ボタン  -->
+							<!-- 編集ボタン、削除ボタン  -->
 							 <input type="hidden" name="houseId" th:value="${house.getId()}">
+							 <input type="hidden" name="reviewId" th:value="${review.getId()}">
 							 <button type="submit" class="btn btn-primary" name="edit" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
 							 編集
 							 </button>
