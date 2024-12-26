@@ -27,13 +27,11 @@
                                                               
                                  </ol>
                                  <!-- お気に入りボタン -->
-                                        <!-- レビュー一覧 -->
-										<form method="get" th:action="@{/houses/review/list}" th:object="${reviewInputForm}">
-										    <!-- 民宿のIDをボタンクリック時にフォームへ渡す -->
-										    <input type="hidden" name="houseId" th:value="${house.getId()}" />
-										    <a type="submit" sec:authorize="isAuthenticated()" th:action="@{/favorite/input}">&#9829;お気に入り追加</a>  
-										    
-										</form> 
+							    <!-- 民宿のIDをボタンクリック時にフォームへ渡す -->
+								<form method="get" th:action="@{/favorite/input}">
+									<input type="hidden" name="houseId" th:value="${house.getId()}" />
+									 <a type="submit" sec:authorize="isAuthenticated()" th:action="@{/favorite/input}">&#9829;お気に入り追加</a>
+								</form>
                                  
                              </nav> 
                              
