@@ -24,7 +24,17 @@
                                      <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
                                      <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>
                                      <li class="breadcrumb-item active" aria-current="page">民宿詳細</li>
+                                                              
                                  </ol>
+                                 <!-- お気に入りボタン -->
+                                        <!-- レビュー一覧 -->
+										<form method="get" th:action="@{/houses/review/list}" th:object="${reviewInputForm}">
+										    <!-- 民宿のIDをボタンクリック時にフォームへ渡す -->
+										    <input type="hidden" name="houseId" th:value="${house.getId()}" />
+										    <a type="submit" sec:authorize="isAuthenticated()" th:action="@{/houses/review/list}">&#9829;お気に入り</a>  
+										    
+										</form> 
+                                 
                              </nav> 
                              
                              <h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>                                                           
@@ -145,10 +155,10 @@
                                          </div>
                                      </div>	
                                 </div>
-                                <!-- </div>-->
+                                
 
 
-								  <!-- </div> -->
+								  
                                  	   <!-- レビュー一覧 -->
 										<form method="get" th:action="@{/houses/review/list}" th:object="${reviewInputForm}">
 										    <!-- 民宿のIDをボタンクリック時にフォームへ渡す -->

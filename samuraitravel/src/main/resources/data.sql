@@ -100,3 +100,7 @@ INSERT IGNORE INTO review (id, house_id, user_id, score, content) VALUES (9, 1, 
 INSERT IGNORE INTO review (id, house_id, user_id, score, content) VALUES (10, 1, 10, 3, '普通でした');
 INSERT IGNORE INTO review (id, house_id, user_id, score, content) VALUES (11, 1, 11, 2, 'ちょっと残念');
 
+-- favoritesテーブル
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (1, 1, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (2, 2, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (3, 3, 1);
