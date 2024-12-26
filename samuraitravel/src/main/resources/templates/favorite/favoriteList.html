@@ -6,56 +6,44 @@
          <div th:replace="~{fragment :: styles}"></div>
            
          <title>お気に入り一覧</title>   
-     </head>
+     </head>s
      <body>
 		 <main>
-			 <div class="text-center my-4">
-				 <form method="get" th:action="@{/houses/review/list/input}" th:object="${reviewInputForm}">
-				 	<!-- 民宿のIDをレビュー投稿ページ処理に渡す -->
-					 <input type="hidden" name="houseId" th:value="${house.getId()}">
-					 
-					 <a th:href="@{/houses}">戻る</a>
-					 <!--ログインしている場合に「レビューを書く」ボタンを表示する-->
-					<div sec:authorize="isAuthenticated()" th:if="${ownReviews.size() == 0}">
-					 	<button type="submit" class="btn btn-primary">レビューを書く</button>
-					 </div>
-					
-					 <!--
-					 <button input type="submit" class="btn btn-primary" th:action="@{/houses/review/list/edit}" th:object="${reviewEditForm}">編集する</button>
-				 		
-				 	<a th:href="@{/edit/{id}(id=${review.id})}" class="btn btn-primary">編集する</a>-->
-				 </form>
-			 </div>
-			 
-			 <!-- レビュー一覧 -->
-				 <div class="card">
-					 <div class="card-body">
-						 <form method="get" th:action="@{/houses/review/list/edit}" th:object="${reviewListForm}">
 
-							 <br><br>
-							 <div class="col-md-6" th:each="review : ${reviews}">
-								<div class="border p-3 mb-3">
-									<!-- ログインユーザとレビューの投稿者IDを比較 -->
-									<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">
-							<!-- 編集ボタン、削除ボタン  -->
-							 <input type="hidden" name="houseId" th:value="${house.getId()}">
-							 <input type="hidden" name="reviewId" th:value="${review.getId()}">
-							 <button type="submit" class="btn btn-primary" name="edit" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
-							 編集
-							 </button>
-							 <button type="submit" class="btn btn-primary" name="delete" th:object="${reviewListForm}" sec:authorize="isAuthenticated()">
-							 削除
-							 </button>
-									</div>
-									<h5 th:text="${review.user.name}"></h5>
-									<p>Score: <span th:text="${review.score}"></span></p>
-									<p th:text="${review.content}"></p>
-									<p><small th:text="${#dates.format(review.getUpdatedAt(), 'yyyy-MM-dd HH:mm')}"></small></p>
-								</div>
-							</div>
-						</form>
-					 </div>
-				 </div>
+			 
+			 <!-- お気に入り一覧 -->
+			<div class="mb-3" th:each="house : ${housePage}">
+			    <a th:href="@{/favoritesList}" class="link-dark samuraitravel-card-link">
+			        <div class="card h-100">   
+			            <div class="row g-0">
+			                <div class="col-md-4">                                                                                
+			                    <img th:if="${house.getImageName()}" th:src="@{/storage/__${house.getImageName()}__}" class="card-img-top samuraitravel-horizontal-card-image" alt="店舗画像">                                                     
+			                    <img th:unless="${house.getImageName()}" th:src="@{/images/noImage.png}" class="card-img-top samuraitravel-horizontal-card-image" alt="NO IMAGE">                                                    
+			                </div> 
+			                <div class="col-md-8">                                                                                                                        
+			                    <div class="card-body">                                    
+			                        <h3 class="card-title mb-3" th:text="${house.getName()}"></h3>                                            
+			
+			                        <hr class="mb-3">
+			                        
+			                        <p class="card-text mb-2">
+			                            <span th:text="${house.getDescription()}"></span>
+			                        </p>                                                    
+			                        
+			                        <p class="card-text mb-2">
+			                            <small class="text-muted" th:text="${'〒' + house.getPostalCode()}"></small>
+			                            <small class="text-muted" th:text="${house.getAddress()}"></small>                                                      
+			                        </p>   
+			                                                                                                                                                                                                       
+			                        <p class="card-text">
+			                            <span th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円 / 泊'}"></span>
+			                        </p>                                    
+			                    </div>
+			                </div>
+			            </div>
+			        </div>    
+			    </a>            
+			</div>  
 		 </main>
 	 </body>
 </html>
